@@ -37,21 +37,14 @@
         <img id="previewImage" src="" alt="Preview">
     </div>
 
-    <!-- Add Camera Modal -->
-    <div class="camera-modal">
-        <div class="camera-container">
-            <video id="cameraView" autoplay playsinline></video>
-            <canvas id="photoCanvas"></canvas>
-            <img src="asset/TwibbonTemplate.png"
-                 alt="Santa Overlay"
-                 id="templateOverlay">
-            <div class="camera-buttons">
-                <button class="camera-btn" id="takePhotoBtn">Take Photo</button>
-                <button class="camera-btn" id="retakePhotoBtn" style="display: none;">Retake</button>
-                <button class="camera-btn" id="savePhotoBtn" style="display: none;">Save</button>
-                <button class="camera-btn" id="closeCameraBtn">Close</button>
-            </div>
-        </div>
+    <!-- Add upload button and container for uploaded image -->
+    <div class="upload-button">
+        <img src="asset/SantaWithAFactPlaceHolder.png" alt="Upload Your Picture">
+    </div>
+
+    <div class="uploaded-image-container" style="display: none;">
+        <img class="uploaded-image" src="" alt="Uploaded Image">
+        <img class="overlay" src="asset/TwibbonTemplate.png" alt="Overlay">
     </div>
 
     <div class="christmas-tree"></div>

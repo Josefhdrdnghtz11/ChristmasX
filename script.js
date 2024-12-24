@@ -1,22 +1,22 @@
 const scenes = [
     {
-        poem: "In the hush of winter's night,\nLove's warmth glows, a soft delight.\nUnderneath the stars so bright,\nMerry Christmas, my heart takes flight.",
+        poem: "In the quiet of the night,\nSnowflakes fall, pure and white.\nWishing you peace and light,\nMerry Christmas, all is right.",
         image: "https://source.unsplash.com/featured/?winter,night"
     },
     {
-        poem: "In a cabin snug, with hearts aglow,\nTogether we share the warmth of snow.\nWith every laugh, our spirits grow,\nMerry Christmas, let love flow.",
+        poem: "By the fire's gentle glow,\nMemories of joy we sow.\nIn this season, love will grow,\nMerry Christmas, warmth we know.",
         image: "https://source.unsplash.com/featured/?cabin,christmas"
     },
     {
-        poem: "Among the lights, our laughter rings,\nIn every gift, a love that sings.\nMerry Christmas, my heart it clings,\nTo you, my dear, the joy it brings.",
+        poem: "Amidst the twinkling lights,\nHope and cheer reach new heights.\nMerry Christmas, hearts take flight,\nIn this season, all feels right.",
         image: "https://source.unsplash.com/featured/?christmas,market"
     },
     {
-        poem: "Underneath the starlit sky,\nI make a wish, just you and I.\nMerry Christmas, let love fly,\nTogether, forever, you and I.",
+        poem: "Under stars so clear and bright,\nDreams and wishes take their flight.\nMerry Christmas, pure delight,\nIn this moment, all is light.",
         image: "https://source.unsplash.com/featured/?starry,night"
     },
     {
-        poem: "As this journey comes to an end,\nKnow that you are my dearest friend.\nMerry Christmas, my heart will send,\nA wish for love that will never bend.",
+        poem: "As the year comes to a close,\nGratitude and love compose.\nMerry Christmas, joy bestows,\nIn our hearts, the warmth still glows.",
         image: "https://source.unsplash.com/featured/?love,christmas"
     }
 ];
@@ -32,7 +32,7 @@ const card = document.querySelector('.card');
 const backgroundMusic = document.getElementById('backgroundMusic');
 
 function updateCard() {
-    cardHeader.textContent = `Scene ${currentScene + 1}`;
+    cardHeader.textContent = "Merry Christmas!";
     cardPoem.textContent = scenes[currentScene].poem;
     cardImage.src = scenes[currentScene].image;
     cardContent.classList.add('fade-in');
@@ -72,96 +72,44 @@ nextButton.addEventListener('click', () => {
     updateCard();
 });
 
-// Camera functionality
-const santaPhotoBtn = document.querySelector('.santa-photo-btn');
-const cameraModal = document.querySelector('.camera-modal');
-const cameraView = document.getElementById('cameraView');
-const photoCanvas = document.getElementById('photoCanvas');
-const takePhotoBtn = document.getElementById('takePhotoBtn');
-const retakePhotoBtn = document.getElementById('retakePhotoBtn');
-const savePhotoBtn = document.getElementById('savePhotoBtn');
-const closeCameraBtn = document.getElementById('closeCameraBtn');
+// Image upload functionality
+const uploadButton = document.querySelector('.upload-button');
+const fileInput = document.createElement('input');
+fileInput.type = 'file';
+fileInput.accept = 'image/*';
+const uploadedImageContainer = document.querySelector('.uploaded-image-container');
+const uploadedImage = document.querySelector('.uploaded-image');
 
-let stream = null;
+uploadButton.addEventListener('click', () => {
+    fileInput.click();
+});
 
-const santaBtn = document.getElementById('santaBtn');
-const templateOverlay = document.getElementById('templateOverlay');
-const previewContainer = document.querySelector('.preview-container');
-const previewImage = document.getElementById('previewImage');
+fileInput.addEventListener('change', (event) => {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const img = new Image();
+            img.src = e.target.result;
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                const context = canvas.getContext('2d');
+                canvas.width = img.width;
+                canvas.height = img.height;
 
-santaBtn.addEventListener('click', async () => {
-    cameraModal.style.display = 'flex';
-    try {
-        stream = await navigator.mediaDevices.getUserMedia({ 
-            video: { 
-                facingMode: "user",
-                width: { ideal: 1280 },
-                height: { ideal: 720 }
-            } 
-        });
-        cameraView.srcObject = stream;
-        
-        // Set template size to match camera view
-        setTimeout(() => {
-            templateOverlay.style.width = cameraView.offsetWidth + 'px';
-            templateOverlay.style.height = cameraView.offsetHeight + 'px';
-        }, 100);
-    } catch (err) {
-        console.error('Camera error:', err);
-        alert('Unable to access camera');
+                // Draw the uploaded image
+                context.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+                // Draw the overlay
+                const overlay = new Image();
+                overlay.src = 'asset/TwibbonTemplate.png';
+                overlay.onload = () => {
+                    context.drawImage(overlay, 0, 0, canvas.width, canvas.height);
+                    uploadedImage.src = canvas.toDataURL();
+                    uploadedImageContainer.style.display = 'block';
+                };
+            };
+        };
+        reader.readAsDataURL(file);
     }
 });
-
-takePhotoBtn.addEventListener('click', () => {
-    const context = photoCanvas.getContext('2d');
-    photoCanvas.width = cameraView.videoWidth;
-    photoCanvas.height = cameraView.videoHeight;
-    
-    // Draw the video frame
-    context.drawImage(cameraView, 0, 0, photoCanvas.width, photoCanvas.height);
-
-    // Delay drawing overlay
-    setTimeout(() => {
-        context.drawImage(templateOverlay, 0, 0, photoCanvas.width, photoCanvas.height);
-        // Show preview
-        previewImage.src = photoCanvas.toDataURL();
-        // ...existing code...
-        previewContainer.style.display = 'block';
-    
-        // Update UI
-        takePhotoBtn.style.display = 'none';
-        retakePhotoBtn.style.display = 'inline';
-        savePhotoBtn.style.display = 'inline';
-        cameraView.style.display = 'none';
-        photoCanvas.style.display = 'block';
-    }, 100);
-});
-
-retakePhotoBtn.addEventListener('click', () => {
-    cameraView.style.display = 'block';
-    photoCanvas.style.display = 'none';
-    savePhotoBtn.style.display = 'none';
-});
-
-savePhotoBtn.addEventListener('click', () => {
-    const link = document.createElement('a');
-    link.download = 'santa-photo.png';
-    link.href = photoCanvas.toDataURL();
-    link.click();
-});
-
-function stopCamera() {
-    if (stream) {
-        stream.getTracks().forEach(track => track.stop());
-    }
-    cameraView.srcObject = null;
-    photoCanvas.style.display = 'none';
-    cameraView.style.display = 'block';
-    takePhotoBtn.style.display = 'inline';
-    retakePhotoBtn.style.display = 'none';
-    savePhotoBtn.style.display = 'none';
-    previewContainer.style.display = 'none';
-}
-
-// Clean up when the page is unloaded
-window.addEventListener('beforeunload', stopCamera);

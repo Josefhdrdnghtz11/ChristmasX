@@ -484,3 +484,45 @@ h1 {
     height: 100%;
     object-fit: cover;
 }
+
+.upload-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 150px;
+    height: 150px;
+    cursor: pointer;
+    transition: transform 0.3s;
+    z-index: 10;
+}
+
+.upload-button img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
+}
+
+.upload-button:hover {
+    transform: scale(1.1);
+    filter: brightness(1.2);
+}
+
+.uploaded-image-container {
+    position: relative;
+    width: 640px;
+    height: 480px;
+    margin: 20px auto;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+}
+
+.uploaded-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.uploaded-image-container .overlay {
+    display: none; /* Ensure overlay is not displayed directly */
