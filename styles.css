@@ -1,0 +1,486 @@
+/* Import Google Fonts at the top of the file */
+@import url('https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@400;700&family=Merriweather:wght@300;400;700&display=swap');
+
+body {
+    background: linear-gradient(to bottom, #1e3c72, #2a5298);
+    color: #fff;
+    font-family: 'Arial', sans-serif;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+.scene {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    transition: opacity 1s;
+}
+
+.fade-in {
+    animation: fadeIn 1s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes snow {
+    0% { background-position: 0 0; }
+    100% { background-position: 100% 100%; }
+}
+
+@keyframes snowflake-fall {
+    0% { transform: translateY(-10px); }
+    100% { transform: translateY(100vh); }
+}
+
+.animated-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('path/to/your/snowflake-image.png') repeat;
+    animation: snow 10s linear infinite;
+    z-index: -1;
+}
+
+.snowflake {
+    position: fixed;
+    top: -10px;
+    background-size: contain;
+    animation: snowflake-fall 10s linear infinite;
+    opacity: 0.8;
+}
+
+.snowflake:nth-child(odd) {
+    animation-duration: 12s;
+}
+
+.snowflake:nth-child(even) {
+    animation-duration: 8s;
+}
+
+.snowflake-small {
+    width: 10px;
+    height: 10px;
+    background: url('asset/WhiteSnowflake2.png') no-repeat center center;
+}
+
+.snowflake-medium {
+    width: 20px;
+    height: 20px;
+    background: url('asset/WhiteSnowflake1.png') no-repeat center center;
+}
+
+.snowflake-large {
+    width: 30px;
+    height: 30px;
+    background: url('asset/GoldSnowflake.png') no-repeat center center;
+}
+
+.container {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 50px 20px;
+}
+
+h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    animation: fadeInDown 2s;
+    font-family: 'Mountains of Christmas', cursive;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes fadeInDown {
+    0% { opacity: 0; transform: translateY(-50px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+.hidden {
+    opacity: 0;
+}
+
+.visible {
+    opacity: 1;
+}
+
+#sceneImage {
+    max-width: 80%;
+    border-radius: 10px;
+    transition: transform 0.5s;
+}
+
+#sceneImage:hover {
+    transform: scale(1.05);
+}
+
+#poem {
+    margin-top: 20px;
+    font-size: 1.5rem;
+    transition: color 0.5s, transform 0.5s;
+}
+
+#poem:hover {
+    color: #ff6347;
+    transform: scale(1.05);
+}
+
+.christmas-tree {
+    position: absolute;
+    bottom: 20px;
+    left: -100px; /* Changedfrom 20px to move it more to the left */
+    width: 400px;  /* Increased from 200px */
+    height: 700px; /* Increased from 300px */
+    background: url('asset/ChristmastreeWithSnow.png') no-repeat center center;
+    background-size: contain;
+    animation: treeSwing 2s infinite;
+    z-index: 1; /* Add z-index to ensure tree appears above other elements */
+}
+
+@keyframes treeSwing {
+    0%, 100% { transform: rotate(-5deg); }
+    50% { transform: rotate(5deg); }
+}
+
+.gift {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: 300px;
+    height: 300px;
+    background: url('asset/GingerbreadHouse1.png') no-repeat center center;
+    background-size: contain;
+    animation: giftBounce 2s infinite;
+}
+
+@keyframes giftBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.card {
+    position: relative;
+    width: 80%;
+    max-width: 1000px;
+    height: auto;
+    aspect-ratio: 1728 / 1240;
+    margin: 50px auto;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    transition: transform 0.5s;
+    cursor: pointer;
+    transform-style: preserve-3d;
+    perspective: 1000px; /* Add perspective for better 3D effect */
+    transform-origin: center center;
+    perspective-origin: center center;
+}
+
+.card-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    backface-visibility: hidden;
+    transform: rotateY(180deg); /* Flip content initially to match back face */
+    color: #333; /* Ensure text is dark */
+    text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.8); /* Add subtle text shadow for better readability */
+    transform-origin: center center;
+    text-align: center;
+    font-family: 'Merriweather', serif;
+}
+
+.card-content.active {
+    display: flex; /* Change from block to flex */
+}
+
+.card-header, .card-poem {
+    backface-visibility: visible;
+}
+
+.card.open .card-content {
+    transform: rotateY(360deg); /* Ensure content is right-side-up when card is open */
+}
+
+.card.open .card-header,
+.card.open .card-poem {
+    transform: rotateY(0deg); /* Reset rotation when card is open */
+}
+
+.card-front, .card-back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.5s;
+}
+
+.card-front {
+    background: url('asset/ChristmasCard.png') no-repeat center center;
+    background-size: cover;
+    transform: rotateY(0deg);
+    z-index: 2; /* Add this to ensure front card is visible */
+}
+
+.card-back {
+    background: url('asset/OtherCardBackgroundExceptFrontPage.png') no-repeat center center;
+    background-size: cover;
+    transform: rotateY(180deg);
+    z-index: 1; /* Add this to keep back card behind */
+    color: #333; /* Dark text color for better contrast */
+    padding: 20px;
+    box-sizing: border-box;
+    transform-origin: center center;
+}
+
+.card-back::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.85); /* White overlay with 85% opacity */
+    z-index: -1;
+}
+
+.card.open .card-front {
+    transform: rotateY(180deg);
+    z-index: 1; /* Switch z-index when card is open */
+}
+
+.card.open .card-back {
+    transform: rotateY(360deg); /* Use 360 instead of 0 to keep text readable */
+    z-index: 2; /* Switch z-index when card is open */
+}
+
+.card-image {
+    width: 100%;
+    border-radius: 10px;
+    transition: transform 0.5s;
+}
+
+.card-image:hover {
+    transform: scale(1.05);
+}
+
+.card-poem {
+    margin-top: 20px;
+    font-size: 1.8rem;
+    transition: color 0.5s, transform 0.5s;
+    backface-visibility: visible;
+    color: #333; /* Override any inherited light colors */
+    background: rgba(255, 255, 255, 0.7); /* Semi-transparent background */
+    padding: 15px;
+    border-radius: 8px;
+    font-family: 'Merriweather', serif;
+    line-height: 1.6;
+    letter-spacing: 0.5px;
+}
+
+.card-poem:hover {
+    color: #d63384; /* Change hover color to be more visible */
+    transform: scale(1.05);
+}
+
+.card-footer {
+    margin-top: 20px;
+}
+
+.card-footer button {
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 5px;
+    background: #28a745;
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.card-footer button:hover {
+    background: #218838;
+}
+
+@keyframes cardUnveil {
+    0% { transform: scale(0.5); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.card.unveil {
+    animation: cardUnveil 1s forwards;
+}
+
+/* Remove the separate background div since we're using ::before */
+.card-background {
+    display: none;
+}
+
+/* Remove or comment out the cardOpen animation as we're using transitions instead */
+/*
+@keyframes cardOpen {
+    0% { transform: rotateY(0deg); }
+    100% { transform: rotateY(180deg); }
+}
+
+.card.open {
+    animation: cardOpen 1s forwards;
+}
+
+.santa-photo-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+    border-radius: 50%;
+    border: 3px solid gold;
+    transition: transform 0.3s;
+    overflow: hidden;
+}
+
+.santa-photo-btn:hover {
+    transform: scale(1.1);
+}
+
+.santa-photo-btn img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.camera-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.camera-container {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    position: relative;
+    width: 640px;
+    height: 480px;
+}
+
+#cameraView {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+#photoCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+}
+
+#templateOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.camera-buttons {
+    margin-top: 10px;
+}
+
+.camera-btn {
+    padding: 8px 16px;
+    margin: 0 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background: #28a745;
+    color: white;
+}
+
+.camera-btn:hover {
+    background: #218838;
+}
+
+.santa-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 150px;
+    height: 150px;
+    cursor: pointer;
+    transition: transform 0.3s;
+    z-index: 10;
+}
+
+.santa-button img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
+}
+
+.santa-button:hover {
+    transform: scale(1.1);
+    filter: brightness(1.2);
+}
+
+.preview-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 200px;
+    height: 200px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+    display: none;
+}
+
+.preview-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}

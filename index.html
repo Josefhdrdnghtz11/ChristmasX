@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poetic Christmas Card</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div class="animated-background"></div>
+    <div class="card">
+        <div class="card-front">
+            <!-- Empty front page with just the Christmas card background -->
+        </div>
+        <div class="card-back">
+            <div class="santa-button">
+                <img src="asset/OtherCardBackgroundExceptFrontPage.png" alt="Take Santa Photo" id="santaBtn">
+            </div>
+            <div class="card-background"></div>
+            <div class="card-content-wrapper">
+                <div class="card-content">
+                    <h1 class="card-header">Welcome to Your Poetic Christmas Adventure!</h1>
+                    <img id="sceneImage" class="card-image img-fluid" src="" alt="Christmas Scene">
+                    <p id="poem" class="card-poem mt-3"></p>
+                    <div class="card-footer">
+                        <button id="nextButton" class="btn btn-success btn-lg mt-4">Next</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add preview container -->
+    <div class="preview-container">
+        <img id="previewImage" src="" alt="Preview">
+    </div>
+
+    <!-- Add Camera Modal -->
+    <div class="camera-modal">
+        <div class="camera-container">
+            <video id="cameraView" autoplay playsinline></video>
+            <canvas id="photoCanvas"></canvas>
+            <img src="asset/TwibbonTemplate.png"
+                 alt="Santa Overlay"
+                 id="templateOverlay">
+            <div class="camera-buttons">
+                <button class="camera-btn" id="takePhotoBtn">Take Photo</button>
+                <button class="camera-btn" id="retakePhotoBtn" style="display: none;">Retake</button>
+                <button class="camera-btn" id="savePhotoBtn" style="display: none;">Save</button>
+                <button class="camera-btn" id="closeCameraBtn">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="christmas-tree"></div>
+    <div class="gift"></div>
+    <audio id="backgroundMusic" loop>
+        <source src="asset/Merry Christmas Darling!.mp3" type="audio/mpeg">
+    </audio>
+    <script src="script.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/snowfall-js/dist/snowfall.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#backgroundMusic')[0].play();
+            $('#startMusicButton').on('click', function() {
+                $('#backgroundMusic')[0].play();
+                $(this).hide();
+            });
+            $(document).snowfall({ round: true, minSize: 1, maxSize: 5 });
+        });
+    </script>
+</body>
+</html>
