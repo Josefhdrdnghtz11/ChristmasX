@@ -30,6 +30,7 @@ const cardPoem = document.querySelector('.card-poem');
 const nextButton = document.querySelector('#nextButton');
 const card = document.querySelector('.card');
 const backgroundMusic = document.getElementById('backgroundMusic');
+const christmasSong = new Audio('asset/All I Want for Christmas Is You.mp3');
 
 function updateCard() {
     cardHeader.textContent = "Merry Christmas!";
@@ -56,6 +57,8 @@ function createSnowflakes() {
 
 card.addEventListener('click', () => {
     card.classList.toggle('open'); // Toggle the open class
+    christmasSong.pause(); // Stop "All I Want for Christmas Is You"
+    christmasSong.currentTime = 0; // Reset the song
     backgroundMusic.play().catch(error => console.log("Audio play failed:", error));
     setTimeout(() => {
         cardContent.classList.add('active');
@@ -107,9 +110,43 @@ fileInput.addEventListener('change', (event) => {
                     context.drawImage(overlay, 0, 0, canvas.width, canvas.height);
                     uploadedImage.src = canvas.toDataURL();
                     uploadedImageContainer.style.display = 'block';
+                    // Remove the overlay image element
+                    const overlayImg = uploadedImageContainer.querySelector('.overlay');
+                    if (overlayImg) {
+                        overlayImg.remove();
+                    }
+                    // Play the song
+                    backgroundMusic.pause(); // Stop "Merry Christmas Darling!"
+                    backgroundMusic.currentTime = 0; // Reset the song
+                    christmasSong.play().catch(error => console.log("Audio play failed:", error));
+
+                    // Save the image to the database
+                    saveImageToDatabase(canvas.toDataURL());
                 };
             };
         };
         reader.readAsDataURL(file);
     }
 });
+
+function saveImageToDatabase(imageData) {
+    // Ensure the base64 data is correctly formatted before sending it to the server
+    const base64Data = imageData.split(',')[1];
+    fetch('https://josefhdeindonesienboi.cloud/save-image', { // Updated URL to use HTTPS
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest' // Custom header to force HTTP/1.1
+        },
+        body: JSON.stringify({ image: base64Data })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            console.log('Image saved successfully:', data.fileName);
+        } else {
+            console.log('Failed to save image:', data.message);
+        }
+    })
+    .catch(error => console.log('Error:', error));
+}
